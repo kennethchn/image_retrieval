@@ -38,6 +38,6 @@ def cnn_feature_extract_demo():
 
 
 if __name__ == '__main__':
-    image_path_demo()
-    feature_extract_demo()
-#    cnn_feature_extract_demo()
+#    image_path_demo()
+#    feature_extract_demo()
+    cnn_feature_extract_demo()

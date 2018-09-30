@@ -13,15 +13,13 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
 import tensorflow as tf
 
-current_path = os.path.dirname(__file__)
 config = ConfigParser.ConfigParser()
+current_path = os.path.dirname(os.path.abspath(__file__))
 config_path = os.path.join(current_path, 'cls_config.ini')
 config.read(config_path)
 
-
 #是否从断点开始
 test_flag = True
-
 
 def get_ana_data():
     #分析数据得到最优阈值

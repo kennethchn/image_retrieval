@@ -12,13 +12,23 @@ import caffe
 import numpy as np
 
 from IOoperate import rwOperate
+import ConfigParser
 
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
+config = ConfigParser.ConfigParser()
+current_path = os.path.dirname( os.path.abspath(__file__) )
+config_path = os.path.join( os.path.dirname(__file__) + '/fe_config.ini')
+config.read(config_path)
+
+
 def load_net():
-	weight = '../datafolder/resnet/ResNet-152-model.caffemodel'
-	deploy_file = '../datafolder/resnet/ResNet_152_deploy.prototxt'
+
+	weight = config.get('CNNParam', 'weight')
+	deploy_file = config.get('CNNParam', 'deploy_file')
+#	weight = '/home/kenneth/ckwork/caffework/resnet-protofiles/ResNet-152-model.caffemodel'
+#	deploy_file = '/home/kenneth/ckwork/caffework/resnet-protofiles/ResNet_152_deploy.prototxt'
 
 	net = caffe.Net( deploy_file, weight, caffe.TEST )
 	return net
@@ -55,6 +65,7 @@ def extract_feature(net, image_path):
 		tmp_feature = copy.deepcopy(np.squeeze( net.blobs['pool5'].data))
 #		print( 'tmp_feature:', tmp_feature )
 		features_dict[img] = tmp_feature
-	rwOperate.save_dict_des( features_dict, './test/com/image_cnn_dict.feature')
+	cnn_feature_path = config.get('CNNParam', 'cnn_feature_path')	
+	rwOperate.save_dict_des( features_dict, cnn_feature_path )
 	return features_dict 
 		
