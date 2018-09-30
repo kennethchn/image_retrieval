@@ -14,7 +14,8 @@ import ConfigParser
 from IOoperate import rwOperate
 
 config = ConfigParser.ConfigParser()
-config.read('./Search/cnn_config.ini')
+current_path = os.path.dirname(os.path.abspath(__file__))
+config.read(os.path.join(current_path,'cnn_config.ini'))
 
 caffe.set_mode_gpu()
 caffe.set_device(0)
