@@ -10,7 +10,8 @@ from IOoperate import rwOperate as rw
 
 print('cv version: ', cv2.__version__)
 config = ConfigParser.ConfigParser()
-config.read('./FeatureExtract/fe_config.ini')
+config_path = os.path.join( os.path.dirname(__file__) + '/fe_config.ini')
+config.read(os.path.join( os.path.dirname(__file__) + '/fe_config.ini'))
 
 def create_detector( detector='surf' ):
     if detector.startswith('si'):
@@ -83,7 +84,7 @@ def save_feature( proto_path, save_root_path ):
             rw.save_dict(image_feature_path_dict, image_feature_path_file)
         
             config.set('MetaData', 'image_idx', str(image_idx - 1))
-            with open('config.ini','wb') as configfile:
+            with open(config_path,'wb') as configfile:
                 config.write(configfile)
 
 

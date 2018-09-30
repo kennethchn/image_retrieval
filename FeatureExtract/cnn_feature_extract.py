@@ -55,5 +55,6 @@ def extract_feature(net, image_path):
 		tmp_feature = copy.deepcopy(np.squeeze( net.blobs['pool5'].data))
 #		print( 'tmp_feature:', tmp_feature )
 		features_dict[img] = tmp_feature
+	rwOperate.save_dict_des( features_dict, './test/com/image_cnn_dict.feature')
 	return features_dict 
-
+		
