@@ -27,10 +27,18 @@ def detect(sift, image, mask = None):
     kp, des = sift.detectAndCompute(image, mask )
     return kp, des
 
-def save_feature( proto_path, save_root_path ):
+def save_feature( proto_path = '', save_root_path = '' ):
     # save feature proto and feature path proto
     #proto_path : image path dict, proto file
     # save_root_path : save root folder, the subfolder will be create 
+
+    if not proto_path or not os.path.exists(proto_path):
+        proto_path = config.get('PATH', 'src_image_path') 
+        print( 'warnning: src image proto path is not exists, will use the default parameter which defined in the fe_config.ini')
+
+    if not save_root_path or not os.path.exists( save_root_path ):
+        save_root_path = config.get('PATH', 'save_root_path')
+        print('warnning: save root path is not exists, will use the default parameter defined in the fe_config.ini instead')
 
     if not os.path.exists(proto_path):
         print('ErrorMessage:', proto_path, ' is not exisit!!!')
