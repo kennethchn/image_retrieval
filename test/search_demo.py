@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 #-*-coding:utf-8-*-
+import copy
 import numpy as np
+import sys
+sys.path.append('..')
 from Search import cnn_search
 from IOoperate import rwOperate
 from FeatureExtract import cnn_feature_extract as cfe
@@ -35,9 +38,9 @@ def demo3():
 def demo4():
 #	image_path = '/root/caffework/TestLabelImage'
 #	image_path = './image'
-	image_path = '../datafolder/ceshi0109'
+	image_path = '/home/kenneth/gitstore/datafolder/original_wine_images'
 	search_feature = cnn_search.extract_feature( image_path )
-	name_list, feature_train = cnn_search.load_feature('../datafolder/com/image_cnn_dict.feature')
+	name_list, feature_train = cnn_search.load_feature('/home/kenneth/gitstore/datafolder/com/image_cnn_dict.feature')
 	
 	print( name_list[0:3])
 	print( feature_train[0:3])	
@@ -55,8 +58,8 @@ def demo4():
 			temp_record.append( name_list[mr.trainIdx] )
 		record_result.append( copy.deepcopy(temp_record) )	
 #	print( record_result )
-	np.save( '../datafolder/record.npy', record_result )
+	np.save( '../../datafolder/record.npy', record_result )
 
 
 if __name__ == '__main__':
-    demo3()
+    demo4()

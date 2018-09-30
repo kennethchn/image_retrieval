@@ -2,6 +2,8 @@
 #-*-coding:utf-8 -*-
 
 import os
+import sys
+
 import numpy as np 
 
 from VLAD import VlADlib as VLAD
@@ -23,9 +25,10 @@ def getDescriptors(src_image_feature_path):
     if os.path.exists( image_feature_path ):
         path_dict = rwOperate.read_dict(image_feature_path)
     else:
-        print('have no src_image_feature_path.path to read!')
+        print('have no src_image_feature_path.path to read!', image_feature_path)
+        return -1
 
-    descriptors=list()
+    descriptors = list()
 
     for key in path_dict.keys():
         one_image_feature_path = path_dict[key]
@@ -84,21 +87,4 @@ def load_VLAD_from_proto(descriptor_dict_path):
     descriptors_dict = rwOperate.read_dict_des( descriptor_dict_path)
     return descriptors_dict
 
-if __name__ == '__main__':
-
-    #test1
-    path = './test/com'
-    train_feature = getDescriptors(path)
-    kMeansDictionary(train_feature, 100, path)
-    print( 'cluster finished!')
-    res = read_kmean_result(path)
-
-    save_VLAD_to_proto(path, res)
-    print( 'save vlad feature finished!')
-    des_dict = load_VLAD_from_proto(os.path.join(path, 'descriptors_dict.vlad'))
-
-
-    ##cluster result save and load example
-    #joblib.dump( res, 'surf_cluster.pkl')
-    #km = joblib.load('surf_cluster.pkl')
 
