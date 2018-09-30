@@ -10,19 +10,24 @@ import time
 import cv2
 import caffe
 import numpy as np
-
+import ConfigParser
 from IOoperate import rwOperate
+
+config = ConfigParser.ConfigParser()
+config.read('./Search/cnn_config.ini')
 
 caffe.set_mode_gpu()
 caffe.set_device(0)
 
 def load_net():
-	weight = '../datafolder/resnet/ResNet-152-model.caffemodel'
-	deploy_file = '../datafolder/resnet/ResNet_152_deploy.prototxt'
+	weight = config.get('cnn', 'weight')
+	deploy_file = config.get('cnn', 'deploy_file')
 
 	net = caffe.Net( deploy_file, weight, caffe.TEST )
 	return net
+
 def one_extract_feature(net, image_path):
+	#抽取一张图像的特征
 	transformer = caffe.io.Transformer({'data':net.blobs['data'].data.shape})
 	transformer.set_transpose('data', (2,0,1))
 	transformer.set_raw_scale('data', 255)
@@ -45,6 +50,7 @@ def one_extract_feature(net, image_path):
 	return one_feature 
 
 def extract_feature( image_path):
+	#抽取文件夹下所有图像的特征 
 	net = load_net()
 	transformer = caffe.io.Transformer({'data':net.blobs['data'].data.shape})
 	transformer.set_transpose('data', (2,0,1))
@@ -70,8 +76,8 @@ def extract_feature( image_path):
 		features_dict[img] = copy.deepcopy( np.squeeze( net.blobs['pool5'].data))
 	return features_dict 
 
-def load_feature():
-	fd = rwOperate.read_dict_des( '../datafolder/image_cnn_dict.feature')
+def load_feature( feature_proto_path ):
+	fd = rwOperate.read_dict_des(feature_proto_path )
 	feature_list = []
 	for key in fd.keys():
 		feature_list.append( fd[key] )

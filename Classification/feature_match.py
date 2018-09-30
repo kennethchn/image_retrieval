@@ -13,8 +13,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import LinearSVC
 import tensorflow as tf
 
+current_path = os.path.dirname(__file__)
 config = ConfigParser.ConfigParser()
-config.read('./Classification/cls_config.ini')
+config_path = os.path.join(current_path, 'cls_config.ini')
+config.read(config_path)
 
 
 #是否从断点开始
@@ -23,7 +25,7 @@ test_flag = True
 
 def get_ana_data():
     #分析数据得到最优阈值
-    with open('./Classification/data_ana_foranaly.txt', 'r') as f:
+    with open(os.path.join(current_path, 'data_ana_foranaly.txt'), 'r') as f:
         data = f.readlines()
 
     ana_data = []
@@ -227,6 +229,7 @@ def class_image_slow( imageDir ):
     if break_from_flag: 
         key_list_path = config.get('MetaData', 'key_list_path')
         index_image_feature_path_dict = rw.read_dict(iif_save_path)
+
         with open(key_list_path, 'r') as f:
             temp_key = f.readline().strip()
             while temp_key:
@@ -236,7 +239,7 @@ def class_image_slow( imageDir ):
     else:
         #获取所以特征的key，即所以特征的图像名称list
         key_list = feature_path_dict.keys()
-        key_list_path = os.path.join( imageDir, 'key_list_path' )
+        key_list_path = os.path.join( imageDir, 'key_list.txt' )
 
     #测试
     if test_flag:
@@ -297,7 +300,7 @@ def class_image_slow( imageDir ):
     #测试时候保存数据，用于分析
     if test_flag:
         
-        with open('data_ana.txt', 'w') as f:
+        with open(os.path.join(current_path,'data_ana.txt'), 'w') as f:
             for one_data in data_ana:
                 txt = ''
                 for elem in one_data:

@@ -11,7 +11,7 @@ from FeatureExtract import feature_extract
 from Classification import feature_match
 from IOoperate import rwOperate 
 
-name_list , feature_train = cnn_search.load_feature()
+name_list , feature_train = cnn_search.load_feature('../datafolder/com/image_cnn_dict.feature')
 
 image_path = '../datafolder/demo.jpg'
 
@@ -39,7 +39,7 @@ for image_name in test_image_list:
 	print( type( one_feature ))
 	one_feature = one_feature[np.newaxis, :]
 
-	res = sf.knnMatch( one_feature, feature_train, k = 100 )
+	res = sf.knnMatch( one_feature, feature_train, k = 2 )
 	print( 'spend time :', time.time() - st_time )
 	#print(res )
 	dest_name_list = []
