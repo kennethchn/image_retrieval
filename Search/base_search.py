@@ -114,7 +114,7 @@ def search(feature, feature_train, matcher = None):
 	st_time = time.time()
 	if not matcher:
 		matcher = cv2.BFMatcher()
-	res = matcher.knnMatch( feature, feature_train, k = 10 )
+	res = matcher.knnMatch( feature, feature_train, k = 200 )
 	print( 'search time:', time.time() - st_time )
 	return res 
 

@@ -1,7 +1,7 @@
 import os
 from VLAD import VLADtoproto
 #test1
-path = '/home/kenneth/gitstore/datafolder/com'
+path = '/home/kenneth/gitstore/datafolder/img1000_feature'
 train_feature = VLADtoproto.getDescriptors(path)
 VLADtoproto.kMeansDictionary(train_feature, 100, path)
 print( 'cluster finished!')
